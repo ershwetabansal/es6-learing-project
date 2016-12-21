@@ -24,9 +24,18 @@ class Carousel {
         if (!this.isReadyToRender()) {
             return;
         }
-        this.carousel.innerHTML = this.template
-            .replace('{{ title }}', this.source[this.index].title)
-            .replace('{{ description }}', this.source[this.index].description);
+        let template = this.template;
+        parseMustache(this.template).forEach(item => (template = template.replace(item.matcher, this.source[this.index][item.replacer])));
+        this.carousel.innerHTML = template;
+
+        function parseMustache(str) {
+            return str.match(/{{\s*[\w\.]+\s*}}/g).map(function (x) {
+                return {
+                    matcher : x,
+                    replacer : x.match(/[\w\.]+/)[0]
+                };
+            });
+        }
 
     }
 
