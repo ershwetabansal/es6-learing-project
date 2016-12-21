@@ -1,4 +1,4 @@
-var books = [
+let books = [
     {
         title : 'Assassin Of History',
         description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.'
@@ -17,6 +17,25 @@ var books = [
     }
 ];
 
+let images = [
+    {
+        source : 'http://example.com/dog.png',
+        name : 'Dog'
+    },
+    {
+        source : 'http://example.com/cat.png',
+        name : 'Cat'
+    },
+    {
+        source : 'http://example.com/snake.png',
+        name : 'Snake'
+    },
+    {
+        source : 'http://example.com/monkey.png',
+        name : 'Monkey'
+    }
+];
 module.exports = {
-    books : books
+    books : books,
+    images : images
 };
