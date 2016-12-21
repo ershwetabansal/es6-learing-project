@@ -8,13 +8,12 @@ describe("A carousel widget ", function () {
 
     it("displays one item at a item from a list of items.", function () {
         var carousel = Carousel.setup({
-            target : 'carousel',
             template : '<div>{{ title }}</div><div>{{ description }}</div>',
         });
 
         carousel.renderWith(mock.books);
 
-        var element = document.getElementById('carousel');
+        var element = carousel.html();
 
         expect(element.innerHTML).toContain(mock.books[0].title);
         expect(element.innerHTML).toContain(mock.books[0].description);
