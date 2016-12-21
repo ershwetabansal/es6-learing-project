@@ -29,12 +29,7 @@ class Carousel {
         this.carousel.innerHTML = template;
 
         function parseMustache(str) {
-            return str.match(/{{\s*[\w\.]+\s*}}/g).map(function (x) {
-                return {
-                    matcher : x,
-                    replacer : x.match(/[\w\.]+/)[0]
-                };
-            });
+            return str.match(/{{\s*[\w\.]+\s*}}/g).map(x => ({matcher : x, replacer : x.match(/[\w\.]+/)[0]}));
         }
 
     }
