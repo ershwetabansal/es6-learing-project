@@ -3,7 +3,7 @@ class Carousel {
     constructor(options) {
         this.target = document.getElementById(options.target);
         this.template = options.template;
-
+        this.carousel = document.createElement('div');
     }
 
     static setup(options) {
@@ -15,27 +15,21 @@ class Carousel {
     }
 
     renderWith(items) {
-        this.carousel = document.createElement('div');
-        this.target.appendChild(this.carousel);
-
         this.carousel.innerHTML = this.template
             .replace('{{ title }}', items[0].title)
             .replace('{{ description }}', items[0].description);
     }
 
+    html() {
+        return this.carousel;
+    }
+
     static validate(options) {
-        var valid = true;
-        if (!options.target) {
-            console.error("target is not provided");
-            valid = false;
-        }
-
         if (!options.template) {
-            console.error("Template is not provided");
-            valid = false;
+            throw new Error("Template is not provided");
         }
 
-        return valid;
+        return true;
     }
 }
 
