@@ -17,9 +17,26 @@ class Carousel {
         return new Carousel(options);
     }
 
+    static validate(options) {
+        if (!options.template) {
+            throw new Error("Template is not provided");
+        }
+
+        if (!options.source) {
+            options.source = [];
+        }
+
+        if (!options.target) {
+            options.target = 'body';
+        }
+
+        return true;
+    }
+
     isReadyToRender() {
         return this.source.length > 0;
     }
+
     render() {
         if (!this.isReadyToRender()) {
             return;
@@ -31,7 +48,6 @@ class Carousel {
         function parseMustache(str) {
             return str.match(/{{\s*[\w\.]+\s*}}/g).map(x => ({matcher : x, replacer : x.match(/[\w\.]+/)[0]}));
         }
-
     }
 
     renderWith(source) {
@@ -51,22 +67,6 @@ class Carousel {
     prev() {
         (this.index > 0) ? (this.index--) : (this.index = this.source.length);
         this.render();
-    }
-
-    static validate(options) {
-        if (!options.template) {
-            throw new Error("Template is not provided");
-        }
-
-        if (!options.source) {
-            options.source = [];
-        }
-
-        if (!options.target) {
-            options.target = 'body';
-        }
-
-        return true;
     }
 }
 
