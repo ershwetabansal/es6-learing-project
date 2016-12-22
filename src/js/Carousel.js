@@ -44,20 +44,26 @@ class Carousel {
         if (!this.isReadyToRender()) {
             return;
         }
+
         let template = this.template;
-        parseMustache(this.template).forEach(item => (template = template.replace(item.matcher, this.source[this.index][item.replacer])));
+        this.template
+            .match(/{{\s*[\w\.]+\s*}}/g)
+            .map(x => ({matcher : x, replacer : this.source[this.index][x.match(/[\w\.]+/)[0]]}))
+            .forEach(item => (template = template.replace(item.matcher, item.replacer)));
+
         this.carousel.innerHTML = template;
 
-        function parseMustache(str) {
-            return str.match(/{{\s*[\w\.]+\s*}}/g).map(x => ({matcher : x, replacer : x.match(/[\w\.]+/)[0]}));
-        }
-
-        if (this.interval > 0) {
-            this.auto ? clearInterval(this.auto) : '';
-            this.auto = setInterval(() => this.next(), this.interval);
-        }
+        this.stop();
+        this.start();
     }
 
+    start() {
+        this.interval > 0 ? this.auto = setInterval(() => this.next(), this.interval) : '';
+    }
+
+    stop() {
+        this.auto ? clearInterval(this.auto) : '';
+    }
     renderWith(source) {
         this.source = source;
         this.render();
