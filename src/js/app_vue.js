@@ -14,24 +14,36 @@ Vue.component('latest-emails', {
     <tbody>
         <tr v-for="email in emails">
             <td>{{ email.title }}</td>
-            <td>{{ email.scheduled }}</td>
-            <td>{{ email.sent }}</td>
-            <td>{{ email.unique_opened }}</td>
-            <td>{{ email.downloaded }}</td>
+            <td>{{ email.scheduled || 0 }}</td>
+            <td>{{ email.sent || 0 }}</td>
+            <td>{{ email.unique_opened  || 0 }}</td>
+            <td>{{ email.downloaded || 0 }}</td>
     </tr>
     </tbody>
 </table>`
 });
 
+let latestEmails = [{
+    title : 'Oil - Data review / Europe Oil data',
+    scheduled : '123',
+    sent : '123',
+    unique_opened : '89',
+    downloaded : '7'
+}];
+
 const app = new Vue({
     el: '#app',
     data : {
-        latestEmails : [{
-            title : 'Oil - Data review / Europe Oil data',
-            scheduled : '700',
-            sent : '699',
-            unique_opened : '688',
-            downloaded : '61'
-        }]
+        latestEmails : latestEmails
     }
 });
+
+setTimeout(function () {
+    latestEmails.push({title : 'Natural Gas - Global LNG Data review'});
+    setTimeout(function () {
+        latestEmails.push({title : 'Natural Gas - Global LNG Data review'});
+        setTimeout(function () {
+            latestEmails.push({title : 'Natural Gas - Global LNG Data review'});
+        }, 2000);
+    }, 2000);
+}, 2000);
