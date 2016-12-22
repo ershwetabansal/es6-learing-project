@@ -14,6 +14,11 @@ class Carousel {
         this.index = 0;
         this.interval = options.interval ? options.interval : 0;
 
+        options.next ? document.querySelector(options.next)
+            .addEventListener('click', () => this.next()) : noop();
+        options.prev ? document.querySelector(options.prev)
+            .addEventListener('click', () => this.prev()) : noop();
+
         // Execute in the end after all the setup is done
         this.source.length ? this.render() : noop();
     }
@@ -90,7 +95,7 @@ class Carousel {
     }
 
     prev() {
-        (this.index > 0) ? (this.index--) : (this.index = this.source.length);
+        (this.index > 0) ? (this.index--) : (this.index = this.source.length -1);
         this.render();
     }
 }
