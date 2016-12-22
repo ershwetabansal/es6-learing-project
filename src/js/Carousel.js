@@ -2,6 +2,10 @@ const noop = () => {}
 class Carousel {
 
     constructor(options) {
+        if (!Carousel.validate(options)) {
+            throw new Error("Provide the correct options");
+        }
+
         this.target = document.querySelector(options.target);
         this.template = options.template;
         this.carousel = document.createElement('div');
@@ -15,27 +19,31 @@ class Carousel {
     }
 
     static setup(options) {
-        if (!Carousel.validate(options)) {
-            return;
-        }
-
         return new Carousel(options);
     }
 
     static validate(options) {
+        var valid = true;
+
         if (!options.template) {
-            throw new Error("Template is not provided");
+            console.log("Template is not provided");
+            valid = false;
         }
 
         if (!options.source) {
             options.source = [];
         }
 
+        if (!(options.source instanceof Array)) {
+            console.log("Source should be an array");
+            valid = false;
+        }
+
         if (!options.target) {
             options.target = 'body';
         }
 
-        return true;
+        return valid;
     }
 
     isReadyToRender() {
