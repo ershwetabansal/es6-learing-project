@@ -110,4 +110,27 @@ describe("A carousel widget", function () {
         expect(target.innerHTML).toContain(mock.books[0].description);
     });
 
+    it("configures previous and next buttons if provided", function () {
+        document.body.innerHTML = '<div id="app"></div><span class="prev">Prev</span><span class="next">Next</span>';
+        Carousel.setup({
+            template : '<div>{{ title }}</div><div>{{ description }}</div>',
+            source : mock.books,
+            target : '#app',
+            prev : '.prev',
+            next : '.next'
+        });
+
+        let target = document.getElementById('app');
+        let next = document.getElementsByClassName('next')[0];
+        let prev = document.getElementsByClassName('prev')[0];
+        let event = new Event('click');
+
+        next.dispatchEvent(event);
+        expect(target.innerHTML).toContain(mock.books[1].title);
+        expect(target.innerHTML).toContain(mock.books[1].description);
+
+        prev.dispatchEvent(event);
+        expect(target.innerHTML).toContain(mock.books[0].title);
+        expect(target.innerHTML).toContain(mock.books[0].description);
+    });
 });
