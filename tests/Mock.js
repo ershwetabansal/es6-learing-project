@@ -55,7 +55,16 @@ let table = `
 let list = `
 <ul id="list">
     <li>
-        item1
+        Assassin Of History
+    </li>
+    <li>
+        Assassin Quest
+    </li>
+    <li>
+        Defenders Of The North
+    </li>
+    <li>
+        Snakes Without Hate
     </li>
 </ul>`;
 

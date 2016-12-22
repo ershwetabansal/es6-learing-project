@@ -35,6 +35,45 @@ describe("Filter widget", function () {
     });
 
     it("allows to search based upon the text in the column by default", function () {
+        // Given there is a list of books -
+        // Assassin Of History
+        // Assassin Quest
+        // Defenders Of The North
+        // Snakes Without Hate
+
+        document.body.innerHTML =  mock.list;
+        let filter = Filter.setup({
+            target : '#list'
+        });
+
+        var list = document.getElementById('list');
+        expect(list.getElementsByTagName('li').length).toBe(4);
+
+        // When I search for Assasin
+        console.log(filter.searchBox());
+        filter.searchBox().value = 'Assasin';
+        filter.searchBox().fireEvent("onchange");
+
+        // Then I see 2 books with the names containing Assasin
+        expect(list.getElementsByTagName('li').length).toBe(2);
+        expect(list.innerHTML).toContain('Assassin Of History');
+        expect(list.innerHTML).toContain('Assassin Quest');
+
+        // When I search for 'Snakes'
+        filter.searchBox().value = 'Snakes';
+        filter.searchBox().fireEvent("onchange");
+
+        // Then I see 1 book containing the word 'Snakes'
+        expect(list.getElementsByTagName('li').length).toBe(1);
+        expect(list.innerHTML).toContain('Snakes Without Hate');
+
+
+        // When I clear the search
+        filter.searchBox().value = '';
+        filter.searchBox().fireEvent("onchange");
+
+        // Then I see all 5 books
+        expect(list.getElementsByTagName('li').length).toBe(5);
 
     });
 
