@@ -4,7 +4,7 @@ describe("A carousel widget", function () {
 
     beforeEach(function () {
         document.body.innerHTML = '<div id="carousel"></div>';
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
     });
 
     it("can be setup with source and displays the first item from source.", function () {
@@ -78,7 +78,7 @@ describe("A carousel widget", function () {
         var carousel = Carousel.setup({
             template : '<div>{{ title }}</div><div>{{ description }}</div>',
             source : mock.books,
-            interval : 5000
+            interval : 1000
         });
 
         expect(carousel.html().innerHTML).toContain(mock.books[0].title);
@@ -92,8 +92,22 @@ describe("A carousel widget", function () {
                 expect(carousel.html().innerHTML).toContain(mock.books[2].description);
 
                 done();
-            }, 5000);
-        }, 5000);
+            }, 1000);
+        }, 1000);
 
     });
+
+    it("displays the carousel under a configured target", function () {
+        document.body.innerHTML = '<div id="app"></div>';
+        Carousel.setup({
+            template : '<div>{{ title }}</div><div>{{ description }}</div>',
+            source : mock.books,
+            target : '#app'
+        });
+
+        let target = document.getElementById('app');
+        expect(target.innerHTML).toContain(mock.books[0].title);
+        expect(target.innerHTML).toContain(mock.books[0].description);
+    });
+
 });
