@@ -35,19 +35,24 @@ filterClasses['ULFilter'] = class  extends Filter {
 filterClasses['TABLEFilter'] = class  extends Filter {
     constructor(options) {
         super(options);
-        let columns = this.target.getElementsByTagName('tr')[0].getElementsByTagName('td');
-        let searchRow = document.createElement('tr');
-        for (let i = 0; i < columns.length; i++) {
-            let search = document.createElement('input');
-            let searchColumn = document.createElement('td');
-            searchColumn.appendChild(search);
-            searchRow.appendChild(searchColumn);
-        }
-
-        this.search = document.createElement('table');
-        this.search.appendChild(searchRow);
+        this.search = createSearchElementsFor(this.target);
         document.body.insertBefore(this.search, this.target);
     }
 };
+
+function createSearchElementsFor(table) {
+    let columns = table.getElementsByTagName('tr')[0].getElementsByTagName('td');
+    let searchRow = document.createElement('tr');
+    for (let i = 0; i < columns.length; i++) {
+        let search = document.createElement('input');
+        let searchColumn = document.createElement('td');
+        searchColumn.appendChild(search);
+        searchRow.appendChild(searchColumn);
+    }
+    let searchTable = document.createElement('table');
+    searchTable.appendChild(searchRow);
+
+    return searchTable;
+}
 
 module.exports = Filter;
