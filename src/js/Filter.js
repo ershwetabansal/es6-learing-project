@@ -6,7 +6,7 @@ class Filter {
 
         this.target = options.target;
         this.cache = document.createElement('div');
-        this.cache.innerHTML = this.target.innerHTML;
+        this.cache.innerHTML = this.target.outerHTML;
         this.search = (options.type == 'dropdown') ? document.createElement('select') : document.createElement('input');
     }
 
@@ -18,10 +18,15 @@ class Filter {
         return new filterClasses[filter](options);
     }
 
-    find(text) {
+    find(text, index) {
         this.target.innerHTML = this.getAllItems()
-            .filter((item) => item.textContent.toLowerCase().includes(text.toLowerCase()))
-            .map((item) => (item.outerHTML)).join("");
+            .filter((item) => this.criteria(item, index).toLowerCase().includes(text.toLowerCase()))
+            .map((item) => (item.outerHTML))
+            .join("");
+    }
+
+    criteria(item) {
+        return item.textContent;
     }
 
     getAllItems() {
@@ -53,10 +58,25 @@ filterClasses['TABLEFilter'] = class  extends Filter {
         super(options);
         this.search = createSearchTableFor(this.target);
         document.body.insertBefore(this.search, this.target);
+        this.searchBox().forEach((search, index) => search.addEventListener('onchange', (e) => this.find(e.target.value, index)));
+    }
+
+    searchBox() {
+        return cells(this.search, 0).map((item) => item.getElementsByTagName('input')[0]);
+    }
+
+    criteria(item, index) {
+        return item.getElementsByTagName('td')[index].textContent;
+    }
+
+    getAllItems() {
+        return [].slice.call(this.cache.getElementsByTagName('tbody')[0].getElementsByTagName('tr'));
     }
 };
 
-
+function cells(table, rowIndex) {
+    return [].slice.call(table.getElementsByTagName('tr')[rowIndex].getElementsByTagName('td'));
+}
 
 function createSearchTableFor(table) {
     let columns = table.getElementsByTagName('tr')[0].getElementsByTagName('td');
