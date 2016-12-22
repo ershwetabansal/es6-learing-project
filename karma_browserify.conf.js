@@ -4,7 +4,7 @@ module.exports = function(config) {
         reporters: ['dots'],
         browsers: ['Chrome'],
         files: [
-            'dist/js/app.js',
+            'public/js/app.js',
             'tests/**/*Spec.js'
         ],
         preprocessors: {

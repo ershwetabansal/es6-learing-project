@@ -31,14 +31,14 @@ gulp.task('webpack', function() {
                 filename: 'main.js'
             }
         }))
-        .pipe(gulp.dest('dist/js'));
+        .pipe(gulp.dest('public/js'));
 });
 
 gulp.task('browserify', function() {
     return browserify('src/js/Carousel.js')
         .bundle()
         .pipe(source('app.js'))
-        .pipe(gulp.dest('dist/js'));
+        .pipe(gulp.dest('public/js'));
 });
 
 gulp.task('watch', function(){
