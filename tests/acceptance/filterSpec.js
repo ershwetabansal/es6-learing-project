@@ -48,11 +48,11 @@ describe("Filter widget", function () {
 
         var list = document.getElementById('list');
         expect(list.getElementsByTagName('li').length).toBe(4);
+        var event = new Event('onchange');
 
         // When I search for Assasin
-        console.log(filter.searchBox());
-        filter.searchBox().value = 'Assasin';
-        filter.searchBox().fireEvent("onchange");
+        filter.searchBox().value = 'assassin';
+        filter.searchBox().dispatchEvent(event);
 
         // Then I see 2 books with the names containing Assasin
         expect(list.getElementsByTagName('li').length).toBe(2);
@@ -61,7 +61,7 @@ describe("Filter widget", function () {
 
         // When I search for 'Snakes'
         filter.searchBox().value = 'Snakes';
-        filter.searchBox().fireEvent("onchange");
+        filter.searchBox().dispatchEvent(event);
 
         // Then I see 1 book containing the word 'Snakes'
         expect(list.getElementsByTagName('li').length).toBe(1);
@@ -70,10 +70,10 @@ describe("Filter widget", function () {
 
         // When I clear the search
         filter.searchBox().value = '';
-        filter.searchBox().fireEvent("onchange");
+        filter.searchBox().dispatchEvent(event);
 
         // Then I see all 5 books
-        expect(list.getElementsByTagName('li').length).toBe(5);
+        expect(list.getElementsByTagName('li').length).toBe(4);
 
     });
 
