@@ -35,7 +35,33 @@ let images = [
         name : 'Monkey'
     }
 ];
+
+let table = `
+<table id="table">
+    <thead></thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+`;
+
+let list = `
+<ul id="list">
+    <li>
+        item1
+    </li>
+</ul>`;
+
 module.exports = {
     books : books,
-    images : images
+    images : images,
+    table : table,
+    list : list
 };
