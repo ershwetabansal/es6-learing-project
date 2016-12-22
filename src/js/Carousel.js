@@ -2,15 +2,16 @@ const noop = () => {}
 class Carousel {
 
     constructor(options) {
-        this.target = document.getElementsByTagName(options.target);
+        this.target = document.querySelector(options.target);
         this.template = options.template;
         this.carousel = document.createElement('div');
+        this.target ? this.target.appendChild(this.carousel) : noop();
         this.source = options.source;
         this.index = 0;
         this.interval = options.interval ? options.interval : 0;
 
         // Execute in the end after all the setup is done
-        this.source.length ? this.render() : noop;
+        this.source.length ? this.render() : noop();
     }
 
     static setup(options) {
@@ -59,11 +60,11 @@ class Carousel {
     }
 
     start() {
-        this.interval > 0 ? this.auto = setInterval(() => this.next(), this.interval) : noop;
+        this.interval > 0 ? this.auto = setInterval(() => this.next(), this.interval) : noop();
     }
 
     stop() {
-        this.auto ? clearInterval(this.auto) : noop;
+        this.auto ? clearInterval(this.auto) : noop();
     }
 
     renderWith(source) {
