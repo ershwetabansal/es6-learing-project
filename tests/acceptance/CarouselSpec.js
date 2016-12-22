@@ -74,7 +74,7 @@ describe("A carousel widget", function () {
         expect(imageCarousel.html().innerHTML).toContain(mock.images[0].name);
     });
 
-    it("automatically moves the carousel from item to another with a given interval if configured.", function (done) {
+    it("automatically moves the carousel from one item to another in a given interval if configured.", function (done) {
         var carousel = Carousel.setup({
             template : '<div>{{ title }}</div><div>{{ description }}</div>',
             source : mock.books,

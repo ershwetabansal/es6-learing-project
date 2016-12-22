@@ -6,6 +6,9 @@ class Carousel {
         this.carousel = document.createElement('div');
         this.source = options.source;
         this.index = 0;
+        this.interval = options.interval ? options.interval : 0;
+
+        // Execute in the end after all the setup is done
         this.source.length ? this.render() : '';
     }
 
@@ -47,6 +50,11 @@ class Carousel {
 
         function parseMustache(str) {
             return str.match(/{{\s*[\w\.]+\s*}}/g).map(x => ({matcher : x, replacer : x.match(/[\w\.]+/)[0]}));
+        }
+
+        if (this.interval > 0) {
+            this.auto ? clearInterval(this.auto) : '';
+            this.auto = setInterval(() => this.next(), this.interval);
         }
     }
 
