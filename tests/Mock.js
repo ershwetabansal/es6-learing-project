@@ -41,12 +41,28 @@ let table = `
     <thead></thead>
     <tbody>
         <tr>
-            <td></td>
-            <td></td>
+            <td>Shantaram</td>
+            <td>Gregory David Roberts</td>
+        </tr>
+        <tr>
+            <td>Shantaram</td>
+            <td>Gregory David Roberts</td>
+        </tr>
+        <tr>
+            <td>The mountain shadow</td>
+            <td>Gregory David Roberts</td>
         </tr>
          <tr>
-            <td></td>
-            <td></td>
+            <td>Fountain Head</td>
+            <td>Ayn Rand</td>
+        </tr>
+         <tr>
+            <td>Kite runner</td>
+            <td>Khaled Hosseini</td>
+        </tr>
+        <tr>
+            <td>A thousand Splendid suns</td>
+            <td>Khaled Hosseini</td>
         </tr>
     </tbody>
 </table>
