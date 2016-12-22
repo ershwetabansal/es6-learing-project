@@ -1,3 +1,4 @@
+const noop = () => {}
 class Carousel {
 
     constructor(options) {
@@ -9,7 +10,7 @@ class Carousel {
         this.interval = options.interval ? options.interval : 0;
 
         // Execute in the end after all the setup is done
-        this.source.length ? this.render() : '';
+        this.source.length ? this.render() : noop;
     }
 
     static setup(options) {
@@ -58,12 +59,13 @@ class Carousel {
     }
 
     start() {
-        this.interval > 0 ? this.auto = setInterval(() => this.next(), this.interval) : '';
+        this.interval > 0 ? this.auto = setInterval(() => this.next(), this.interval) : noop;
     }
 
     stop() {
-        this.auto ? clearInterval(this.auto) : '';
+        this.auto ? clearInterval(this.auto) : noop;
     }
+
     renderWith(source) {
         this.source = source;
         this.render();
