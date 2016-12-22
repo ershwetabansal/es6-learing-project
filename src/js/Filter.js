@@ -7,7 +7,7 @@ class Filter {
         this.target = options.target;
         this.cache = document.createElement('div');
         this.cache.innerHTML = this.target.outerHTML;
-        this.search = (options.type == 'dropdown') ? document.createElement('select') : document.createElement('input');
+        this.searchField = (options.type == 'dropdown') ? document.createElement('select') : document.createElement('input');
     }
 
     static setup(options) {
@@ -34,7 +34,7 @@ class Filter {
     }
 
     searchBox() {
-        return this.search;
+        return this.searchField;
     }
 }
 
@@ -44,8 +44,8 @@ filterClasses['ULFilter'] = class  extends Filter {
 
     constructor(options) {
         super(options);
-        document.body.insertBefore(this.search, this.target);
-        this.search.addEventListener('onchange', (e) => this.find(e.target.value));
+        document.body.insertBefore(this.searchField, this.target);
+        this.searchField.addEventListener('onchange', (e) => this.find(e.target.value));
     }
 
     getAllItems() {
@@ -56,13 +56,13 @@ filterClasses['ULFilter'] = class  extends Filter {
 filterClasses['TABLEFilter'] = class  extends Filter {
     constructor(options) {
         super(options);
-        this.search = createSearchTableFor(this.target);
-        document.body.insertBefore(this.search, this.target);
+        this.searchField = createSearchTableFor(this.target);
+        document.body.insertBefore(this.searchField, this.target);
         this.searchBox().forEach((search, index) => search.addEventListener('onchange', (e) => this.find(e.target.value, index)));
     }
 
     searchBox() {
-        return cells(this.search, 0).map((item) => item.getElementsByTagName('input')[0]);
+        return cells(this.searchField, 0).map((item) => item.getElementsByTagName('input')[0]);
     }
 
     criteria(item, index) {
