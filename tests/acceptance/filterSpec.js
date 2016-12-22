@@ -23,14 +23,14 @@ describe("Filter widget", function () {
     });
 
     it("sets up a dropdown for filtering if configured", function () {
-        document.body.innerHTML = '<ul id="list"><li></li></ul>';
+        document.body.innerHTML =  mock.list;
         let filter = Filter.setup({
             target : '#list',
             type : 'dropdown',
             options : ['Yes', 'No']
         });
 
-        expect(filter.searchBox().innerHTML).toContain('select');
+        expect(filter.searchBox().tagName).toBe('SELECT');
 
     });
 

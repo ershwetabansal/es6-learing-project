@@ -5,7 +5,7 @@ class Filter {
         ((new.target === "Filter") ? () => {throw new Error("This class cannot be instantiated directly")} : noop)();
 
         this.target = options.target;
-        this.search = document.createElement('input');
+        this.search = (options.type == 'dropdown') ? document.createElement('select') : document.createElement('input');
     }
 
     static setup(options) {
@@ -35,12 +35,12 @@ filterClasses['ULFilter'] = class  extends Filter {
 filterClasses['TABLEFilter'] = class  extends Filter {
     constructor(options) {
         super(options);
-        this.search = createSearchElementsFor(this.target);
+        this.search = createSearchTableFor(this.target);
         document.body.insertBefore(this.search, this.target);
     }
 };
 
-function createSearchElementsFor(table) {
+function createSearchTableFor(table) {
     let columns = table.getElementsByTagName('tr')[0].getElementsByTagName('td');
     let searchRow = document.createElement('tr');
     for (let i = 0; i < columns.length; i++) {
