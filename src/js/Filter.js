@@ -35,6 +35,11 @@ class Filter {
             .join("");
     }
 
+    updateContent() {
+        this.cache.innerHTML = this.target.outerHTML;
+        this.find();
+    }
+
     criteria(item) {
         return item.textContent.toLowerCase().includes((this.searchBox().value) ? this.searchBox().value.toLowerCase() : '');
     }
