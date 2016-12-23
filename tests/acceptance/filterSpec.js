@@ -77,8 +77,7 @@ describe("Filter widget", function () {
             target : '#table'
         });
 
-        var table = document.getElementById('table').getElementsByTagName('tbody')[0];
-        expect(table.getElementsByTagName('tr').length).toBe(9);
+        expect(rows('table').length).toBe(9);
         var event = new Event('keyup');
 
         // When I search for Shantaram
@@ -86,17 +85,15 @@ describe("Filter widget", function () {
         filter.searchBox()[0].dispatchEvent(event);
 
         // Then I see 2 duplicate records
-        table = document.getElementById('table').getElementsByTagName('tbody')[0];
-        expect(table.getElementsByTagName('tr').length).toBe(1);
-        expect(table.innerHTML).toContain('Shantaram');
+        expect(rows('table').length).toBe(1);
+        expect(tableBody('rows').innerHTML).toContain('Shantaram');
 
         // When I clear the search
         filter.searchBox()[0].value = '';
         filter.searchBox()[0].dispatchEvent(event);
 
         // Then I see all books
-        table = document.getElementById('table').getElementsByTagName('tbody')[0];
-        expect(table.getElementsByTagName('tr').length).toBe(9);
+        expect(rows('table').length).toBe(9);
     });
 
     it("allows to search in the second column of a table", function() {
@@ -105,8 +102,7 @@ describe("Filter widget", function () {
             target : '#table'
         });
 
-        var table = document.getElementById('table').getElementsByTagName('tbody')[0];
-        expect(table.getElementsByTagName('tr').length).toBe(9);
+        expect(rows('table').length).toBe(9);
         var event = new Event('keyup');
 
         // When I search for Khalid in the second column
@@ -114,18 +110,16 @@ describe("Filter widget", function () {
         filter.searchBox()[1].dispatchEvent(event);
 
         // Then I see 2 records
-        table = document.getElementById('table').getElementsByTagName('tbody')[0];
-        expect(table.getElementsByTagName('tr').length).toBe(2);
-        expect(table.innerHTML).toContain('Kite runner');
-        expect(table.innerHTML).toContain('A thousand Splendid suns');
+        expect(rows('table').length).toBe(2);
+        expect(tableBody('rows').innerHTML).toContain('Kite runner');
+        expect(tableBody('rows').innerHTML).toContain('A thousand Splendid suns');
 
         // When I clear the search
         filter.searchBox()[1].value = '';
         filter.searchBox()[1].dispatchEvent(event);
 
         // Then I see all 5 books
-        table = document.getElementById('table').getElementsByTagName('tbody')[0];
-        expect(table.getElementsByTagName('tr').length).toBe(9);
+        expect(rows('table').length).toBe(9);
     });
 
     it("allows a concatenated search in different table columns", function () {
@@ -134,8 +128,7 @@ describe("Filter widget", function () {
             target : '#table'
         });
 
-        var table = document.getElementById('table').getElementsByTagName('tbody')[0];
-        expect(table.getElementsByTagName('tr').length).toBe(9);
+        expect(rows('table').length).toBe(9);
         var event = new Event('keyup');
 
         // When I search for Kite in the first column and Khaled in the second column
@@ -146,10 +139,9 @@ describe("Filter widget", function () {
         filter.searchBox()[1].dispatchEvent(event);
 
         // Then I see 1 record
-        table = document.getElementById('table').getElementsByTagName('tbody')[0];
-        expect(table.getElementsByTagName('tr').length).toBe(1);
-        expect(table.innerHTML).toContain('Kite runner');
-        expect(table.innerHTML).toContain('Khaled Hosseini');
+        expect(rows('table').length).toBe(1);
+        expect(tableBody('rows').innerHTML).toContain('Kite runner');
+        expect(tableBody('rows').innerHTML).toContain('Khaled Hosseini');
     });
 
     it("throws an error if tried to setup a filter on a span", function () {
@@ -166,5 +158,10 @@ describe("Filter widget", function () {
 
     });
 
-
+    function tableBody(tableID) {
+        return document.getElementById('table').getElementsByTagName('tbody')[0];
+    }
+    function rows(tableID) {
+        return document.getElementById(tableID).getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    }
 });
