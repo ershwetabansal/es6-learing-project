@@ -1,3 +1,4 @@
+let AppFilter = require('./filter.js');
 let Faker = require('./faker.js');
 
 const app = new Vue({
@@ -11,4 +12,14 @@ const app = new Vue({
 
 Faker.json().then(function (response) {
     app.reports = response;
+
+    Vue.nextTick(function () {
+        AppFilter.setup({
+            target : '#items-list'
+        });
+
+        AppFilter.setup({
+            target : '#items-table'
+        });
+    });
 });

@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>ES6 Filter</title>
+    <style>
+        table {
+            width : 100%;
+        }
+        table td {
+            width: 20%;
+        }
+    </style>
 </head>
 <body>
+<h1>ES6 filter along with VUE</h1>
     <div id="app">
-        <table>
-            <thead>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
+        <h2>Filter the list</h2>
+        <ul id="items-list">
+            <li v-for="(item,index) in reports" v-if="index < 15">{{ item.title }}</li>
+        </ul>
+        <hr/>
+        <h2>Setup filters on a table</h2>
+        <table id="items-table">
             <tbody>
             <tr v-for="item in reports">
-                <td>{{ item.id }}</td>
                 <td>{{ item.title }}</td>
                 <td>{{ item.body }}</td>
             </tr>
