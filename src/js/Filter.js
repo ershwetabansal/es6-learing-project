@@ -12,6 +12,9 @@ class Filter {
         this.target = options.target;
         this.cache = document.createElement('div');
         this.cache.innerHTML = this.target.outerHTML;
+        this.searchField = this.getSearchBox(options);
+        this.target.parentElement.insertBefore(this.searchField, this.target);
+        this.setupSearchListener();
     }
 
     static setup(options) {
@@ -40,6 +43,14 @@ class Filter {
         return [];
     }
 
+    getSearchBox(options) {
+        return (options.type == 'dropdown') ? document.createElement('select') : document.createElement('input');
+    }
+
+    setupSearchListener() {
+        this.searchField.addEventListener('keyup', (e) => this.find(e.target.value));
+    }
+
     searchBox() {
         return this.searchField;
     }
@@ -49,35 +60,38 @@ let filterClasses = {};
 
 filterClasses['ULFilter'] = class extends Filter {
 
-    constructor(options) {
-        super(options);
-        this.searchField = (options.type == 'dropdown') ? document.createElement('select') : document.createElement('input');
-        this.target.parentElement.insertBefore(this.searchField, this.target);
-        this.searchField.addEventListener('keyup', (e) => this.find(e.target.value));
-    }
-
     items() {
         return listItems(this.cache);
     }
 };
 
 filterClasses['TABLEFilter'] = class extends Filter {
-    constructor(options) {
-        super(options);
-        this.searchField = createSearchTableFor(this.target.getElementsByTagName('tbody')[0]);
-        this.target.parentElement.insertBefore(this.searchField, this.target);
-        this.searchBox().forEach((search, index) => search.addEventListener('keyup', (e) => this.find(e.target.value, index)));
+
+    getSearchBox(options) {
+        return createSearchTableFor(this.target.getElementsByTagName('tbody')[0]);
     }
 
     searchBox() {
         return tableCells(this.searchField, 0).map((item) => item.getElementsByTagName('input')[0]);
     }
 
+    setupSearchListener() {
+        this.searchBox()
+            .forEach((search, index) =>
+                search.addEventListener('keyup', (e) =>
+                    this.find(e.target.value, index)));
+    }
+
+    items() {
+        return tableRows(this.cache);
+    }
+
     criteria(item) {
         let allSearches = this.searchBox()
             .filter((search) => search.value);
 
-        return allSearches.length == 0 || this.searchBox()
+        return allSearches.length == 0 ||
+            this.searchBox()
             .filter((search, index) =>
                 search.value &&
                 item.getElementsByTagName('td')[index].textContent.toLowerCase()
@@ -86,9 +100,6 @@ filterClasses['TABLEFilter'] = class extends Filter {
             .length == allSearches.length;
     }
 
-    items() {
-        return tableRows(this.cache);
-    }
 };
 
 function tableCells(table, rowIndex) {
