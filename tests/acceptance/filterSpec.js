@@ -172,7 +172,7 @@ describe("Filter widget", function () {
 
 
         // When table data is updated
-        document.getElementById('table').innerHTML =  mock.table(mock.books.splice(5), ['title', 'author']).innerHTML;
+        document.getElementById('table').innerHTML =  mock.table(mock.books.slice(5), ['title', 'author']).innerHTML;
         filter.updateContent();
 
         // Then I see that there are no rows present because 'Shantaram' is not there in the new data
