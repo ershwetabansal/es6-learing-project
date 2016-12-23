@@ -1,4 +1,4 @@
-let AppFilter = require('./filter.js');
+let AppFilter = require('./Filter.js');
 let Faker = require('./faker.js');
 
 const app = new Vue({
