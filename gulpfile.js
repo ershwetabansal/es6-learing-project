@@ -14,8 +14,8 @@ gulp.task('test', function (done) {
     }, done).start();
 });
 
-gulp.task('webpack', function() {
-    return gulp.src('src/js/*.js')
+gulp.task('carousel_demo', function() {
+    return gulp.src(['src/js/app.js', 'src/js/Carousel.js'])
         .pipe(webpack({
             module: {
                 loaders: [{
@@ -28,11 +28,53 @@ gulp.task('webpack', function() {
                 }]
             },
             output: {
-                filename: 'main.js'
+                filename: 'carousel_demo.js'
             }
         }))
         .pipe(gulp.dest('public/js'));
 });
+
+gulp.task('vue_demo', function() {
+    return gulp.src(['src/js/components/*.js', 'src/js/app_vue.js'])
+        .pipe(webpack({
+            module: {
+                loaders: [{
+                    test: /.jsx?$/,
+                    loader: 'babel-loader',
+                    exclude: /node_modules/,
+                    query: {
+                        presets: ['es2015']
+                    }
+                }]
+            },
+            output: {
+                filename: 'vue_demo.js'
+            }
+        }))
+        .pipe(gulp.dest('public/js'));
+});
+
+gulp.task('filter', function() {
+    return gulp.src(['src/js/filter_vue.js', 'src/js/Filter.js'])
+        .pipe(webpack({
+            module: {
+                loaders: [{
+                    test: /.jsx?$/,
+                    loader: 'babel-loader',
+                    exclude: /node_modules/,
+                    query: {
+                        presets: ['es2015']
+                    }
+                }]
+            },
+            output: {
+                filename: 'filter_vue.js'
+            }
+        }))
+        .pipe(gulp.dest('public/js'));
+});
+
+
 
 gulp.task('browserify', function() {
     return browserify('src/js/Carousel.js')
@@ -42,7 +84,7 @@ gulp.task('browserify', function() {
 });
 
 gulp.task('watch', function(){
-  gulp.watch('src/js/**/*.js', ['browserify', 'webpack']);
+  gulp.watch('src/js/**/*.js', ['browserify', 'vue_demo', 'carousel_demo', 'filter']);
 });
 
 gulp.task('test_watch', function(){
@@ -51,7 +93,7 @@ gulp.task('test_watch', function(){
 });
 
 gulp.task('default', function (callback) {
-    runSequence(['browserify', 'webpack'],
+    runSequence(['browserify', 'vue_demo', 'carousel_demo', 'filter'],
         callback
     );
 });
