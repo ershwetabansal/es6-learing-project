@@ -48,7 +48,7 @@ describe("Filter widget", function () {
 
         var list = document.getElementById('list');
         expect(list.getElementsByTagName('li').length).toBe(4);
-        var event = new Event('onchange');
+        var event = new Event('keyup');
 
         // When I search for Assasin
         filter.searchBox().value = 'assassin';
@@ -85,7 +85,7 @@ describe("Filter widget", function () {
 
         var table = document.getElementById('table').getElementsByTagName('tbody')[0];
         expect(table.getElementsByTagName('tr').length).toBe(6);
-        var event = new Event('onchange');
+        var event = new Event('keyup');
 
         // When I search for Shantaram
         filter.searchBox()[0].value = 'shantaram';
@@ -113,7 +113,7 @@ describe("Filter widget", function () {
 
         var table = document.getElementById('table').getElementsByTagName('tbody')[0];
         expect(table.getElementsByTagName('tr').length).toBe(6);
-        var event = new Event('onchange');
+        var event = new Event('keyup');
 
         // When I search for Khalid in the second column
         filter.searchBox()[1].value = 'Khaled';

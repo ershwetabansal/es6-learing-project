@@ -14,8 +14,7 @@ class Filter {
         (options.target ? noop : () => {throw new Error("Target should be present")})();
 
         options.target = document.querySelector(options.target);
-        let filter = options.target.tagName + "Filter";
-        return new filterClasses[filter](options);
+        return new filterClasses[options.target.tagName + "Filter"](options);
     }
 
     find(text, index) {
@@ -44,8 +43,8 @@ filterClasses['ULFilter'] = class  extends Filter {
 
     constructor(options) {
         super(options);
-        document.body.insertBefore(this.searchField, this.target);
-        this.searchField.addEventListener('onchange', (e) => this.find(e.target.value));
+        this.target.parentElement.insertBefore(this.searchField, this.target);
+        this.searchField.addEventListener('keyup', (e) => this.find(e.target.value));
     }
 
     getAllItems() {
@@ -56,9 +55,9 @@ filterClasses['ULFilter'] = class  extends Filter {
 filterClasses['TABLEFilter'] = class  extends Filter {
     constructor(options) {
         super(options);
-        this.searchField = createSearchTableFor(this.target);
-        document.body.insertBefore(this.searchField, this.target);
-        this.searchBox().forEach((search, index) => search.addEventListener('onchange', (e) => this.find(e.target.value, index)));
+        this.searchField = createSearchTableFor(this.target.getElementsByTagName('tbody')[0]);
+        this.target.parentElement.insertBefore(this.searchField, this.target);
+        this.searchBox().forEach((search, index) => search.addEventListener('keyup', (e) => this.find(e.target.value, index)));
     }
 
     searchBox() {
@@ -77,6 +76,7 @@ filterClasses['TABLEFilter'] = class  extends Filter {
 function cells(table, rowIndex) {
     return [].slice.call(table.getElementsByTagName('tr')[rowIndex].getElementsByTagName('td'));
 }
+
 
 function createSearchTableFor(table) {
     let columns = table.getElementsByTagName('tr')[0].getElementsByTagName('td');
