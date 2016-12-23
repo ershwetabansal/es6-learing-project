@@ -72,7 +72,7 @@ filterClasses['TABLEFilter'] = class extends Filter {
     }
 
     searchBox() {
-        return tableCells(this.searchField, 0).map((item) => item.getElementsByTagName('input')[0]);
+        return tableCells(this.searchField).map((item) => item.getElementsByTagName('input')[0]);
     }
 
     setupSearchListener() {
@@ -102,7 +102,7 @@ filterClasses['TABLEFilter'] = class extends Filter {
 
 };
 
-function tableCells(table, rowIndex) {
+function tableCells(table, rowIndex = 0) {
     return [].slice.call(table.getElementsByTagName('tr')[rowIndex].getElementsByTagName('td'));
 }
 
@@ -115,18 +115,17 @@ function listItems(list) {
 }
 
 function createSearchTableFor(table) {
-    let columns = table.getElementsByTagName('tr')[0].getElementsByTagName('td');
-    let searchRow = document.createElement('tr');
-    for (let i = 0; i < columns.length; i++) {
-        let search = document.createElement('input');
-        let searchColumn = document.createElement('td');
-        searchColumn.appendChild(search);
-        searchRow.appendChild(searchColumn);
-    }
     let searchTable = document.createElement('table');
+    let searchRow = document.createElement('tr');
+    tableCells(table).forEach(function () {
+        let searchColumn = document.createElement('td');
+        searchColumn.appendChild(document.createElement('input'));
+        searchRow.appendChild(searchColumn);
+    });
     searchTable.appendChild(searchRow);
 
     return searchTable;
 }
+
 
 module.exports = Filter;
