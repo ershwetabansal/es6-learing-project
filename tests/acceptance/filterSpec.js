@@ -134,11 +134,42 @@ describe("Filter widget", function () {
         expect(table.getElementsByTagName('tr').length).toBe(6);
     });
 
+    it("allows a concatenated search in different table columns", function () {
+        document.body.innerHTML =  mock.table;
+        let filter = Filter.setup({
+            target : '#table'
+        });
+
+        var table = document.getElementById('table').getElementsByTagName('tbody')[0];
+        expect(table.getElementsByTagName('tr').length).toBe(6);
+        var event = new Event('keyup');
+
+        // When I search for Kite in the first column and Khaled in the second column
+        filter.searchBox()[0].value = 'kite';
+        filter.searchBox()[0].dispatchEvent(event);
+
+        filter.searchBox()[1].value = 'khaled';
+        filter.searchBox()[1].dispatchEvent(event);
+
+        // Then I see 1 record
+        table = document.getElementById('table').getElementsByTagName('tbody')[0];
+        expect(table.getElementsByTagName('tr').length).toBe(1);
+        expect(table.innerHTML).toContain('Kite runner');
+        expect(table.innerHTML).toContain('Khaled Hosseini');
+    });
+
+    it("throws an error if tried to setup a filter on a span", function () {
+        document.body.innerHTML = '<span></span>';
+        try {
+            Filter.setup({ target : 'span' });
+        } catch (err) {
+            expect(err.message).toBe('SPAN can not be setup for filtering.');
+        }
+    });
+
     it("allows to search based upon an attribute on each element if configured so", function () {
 
     });
 
-    it("allows a concatenated search in different table columns", function () {
 
-    });
 });
