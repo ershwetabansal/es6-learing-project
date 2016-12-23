@@ -15,47 +15,19 @@ gulp.task('test', function (done) {
 });
 
 gulp.task('carousel_demo', function() {
-    return gulp.src(['src/js/app.js', 'src/js/Carousel.js'])
-        .pipe(webpack({
-            module: {
-                loaders: [{
-                    test: /.jsx?$/,
-                    loader: 'babel-loader',
-                    exclude: /node_modules/,
-                    query: {
-                        presets: ['es2015']
-                    }
-                }]
-            },
-            output: {
-                filename: 'carousel_demo.js'
-            }
-        }))
-        .pipe(gulp.dest('public/js'));
+    return webpackTask(['src/js/app.js', 'src/js/Carousel.js'], 'carousel_demo.js');
 });
 
 gulp.task('vue_demo', function() {
-    return gulp.src(['src/js/components/*.js', 'src/js/app_vue.js'])
-        .pipe(webpack({
-            module: {
-                loaders: [{
-                    test: /.jsx?$/,
-                    loader: 'babel-loader',
-                    exclude: /node_modules/,
-                    query: {
-                        presets: ['es2015']
-                    }
-                }]
-            },
-            output: {
-                filename: 'vue_demo.js'
-            }
-        }))
-        .pipe(gulp.dest('public/js'));
+    return webpackTask(['src/js/components/*.js', 'src/js/app_vue.js'], 'vue_demo.js');
 });
 
 gulp.task('filter', function() {
-    return gulp.src(['src/js/filter_vue.js', 'src/js/Filter.js'])
+    return webpackTask(['src/js/filter_vue.js', 'src/js/Filter.js'], 'filter_vue.js');
+});
+
+function webpackTask(source, destFile) {
+    return gulp.src(source)
         .pipe(webpack({
             module: {
                 loaders: [{
@@ -68,12 +40,11 @@ gulp.task('filter', function() {
                 }]
             },
             output: {
-                filename: 'filter_vue.js'
+                filename: destFile
             }
         }))
         .pipe(gulp.dest('public/js'));
-});
-
+}
 
 
 gulp.task('browserify', function() {
