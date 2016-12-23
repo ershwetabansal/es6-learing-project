@@ -86,7 +86,7 @@ describe("Filter widget", function () {
 
         // Then I see 2 duplicate records
         expect(rows('table').length).toBe(1);
-        expect(tableBody('rows').innerHTML).toContain('Shantaram');
+        expect(tableBody('table').innerHTML).toContain('Shantaram');
 
         // When I clear the search
         filter.searchBox()[0].value = '';
@@ -111,8 +111,8 @@ describe("Filter widget", function () {
 
         // Then I see 2 records
         expect(rows('table').length).toBe(2);
-        expect(tableBody('rows').innerHTML).toContain('Kite runner');
-        expect(tableBody('rows').innerHTML).toContain('A thousand Splendid suns');
+        expect(tableBody('table').innerHTML).toContain('Kite runner');
+        expect(tableBody('table').innerHTML).toContain('A thousand Splendid suns');
 
         // When I clear the search
         filter.searchBox()[1].value = '';
@@ -140,8 +140,8 @@ describe("Filter widget", function () {
 
         // Then I see 1 record
         expect(rows('table').length).toBe(1);
-        expect(tableBody('rows').innerHTML).toContain('Kite runner');
-        expect(tableBody('rows').innerHTML).toContain('Khaled Hosseini');
+        expect(tableBody('table').innerHTML).toContain('Kite runner');
+        expect(tableBody('table').innerHTML).toContain('Khaled Hosseini');
     });
 
     it("throws an error if tried to setup a filter on a span", function () {
@@ -153,15 +153,48 @@ describe("Filter widget", function () {
         }
     });
 
+    it("filters from the new set of table when table is changed", function () {
+        document.body.innerHTML =  mock.table(mock.books, ['title', 'author']).outerHTML;
+        let filter = Filter.setup({
+            target : '#table'
+        });
+
+        expect(rows('table').length).toBe(9);
+        var event = new Event('keyup');
+
+        // When I search for Shantaram
+        filter.searchBox()[0].value = 'Shantaram';
+        filter.searchBox()[0].dispatchEvent(event);
+
+        // Then I see 1 record
+        expect(rows('table').length).toBe(1);
+        expect(tableBody('table').innerHTML).toContain('Shantaram');
+
+
+        // When table data is updated
+        document.getElementById('table').innerHTML =  mock.table(mock.books.splice(5), ['title', 'author']).innerHTML;
+        filter.updateContent();
+
+        // Then I see that there are no rows present because 'Shantaram' is not there in the new data
+        expect(rows('table').length).toBe(0);
+
+        // When I search for Mountain now in the first column
+        filter.searchBox()[0].value = 'mountain';
+        filter.searchBox()[0].dispatchEvent(event);
+
+        // Then I see one record
+        expect(rows('table').length).toBe(1);
+
+    });
 
     it("allows to search based upon an attribute on each element if configured so", function () {
 
     });
 
     function tableBody(tableID) {
-        return document.getElementById('table').getElementsByTagName('tbody')[0];
+        return document.getElementById(tableID).getElementsByTagName('tbody')[0];
     }
     function rows(tableID) {
-        return document.getElementById(tableID).getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        return tableBody(tableID) ? tableBody(tableID).getElementsByTagName('tr') : document.getElementById(tableID).getElementsByTagName('tbody');
     }
 });
