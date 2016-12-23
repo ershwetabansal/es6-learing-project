@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ES6 Filter</title>
+</head>
+<body>
+    <div id="app">
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in reports">
+                <td>{{ item.id }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.body }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="js/filter_vue.js"></script>
+</body>
+</html>
