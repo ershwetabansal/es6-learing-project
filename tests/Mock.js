@@ -14,6 +14,31 @@ let books = [
     {
         title : 'Snakes Without Hate',
         description : 'molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur'
+    },
+    {
+        title : 'Shantaram',
+        author : 'Gregory David Roberts',
+        description : 'Sed ut perspiciatis unde omnis iste natus error sit'
+    },
+    {
+        title : 'The mountain shadow',
+        author : 'Gregory David Roberts',
+        description : 'Sed ut perspiciatis unde omnis iste natus error sit'
+    },
+    {
+        title : 'Fountain Head',
+        author : 'Ayn Rand',
+        description : 'Sed ut perspiciatis unde omnis iste natus error sit'
+    },
+    {
+        title : 'Kite runner',
+        author : 'Khaled Hosseini',
+        description : 'Sed ut perspiciatis unde omnis iste natus error sit'
+    },
+    {
+        title : 'A thousand Splendid suns',
+        author : 'Khaled Hosseini',
+        description : 'Sed ut perspiciatis unde omnis iste natus error sit'
     }
 ];
 
@@ -36,57 +61,39 @@ let images = [
     }
 ];
 
-let table = `
-<table id="table">
-    <thead></thead>
-    <tbody>
-        <tr>
-            <td>Shantaram</td>
-            <td>Gregory David Roberts</td>
-        </tr>
-        <tr>
-            <td>Shantaram</td>
-            <td>Gregory David Roberts</td>
-        </tr>
-        <tr>
-            <td>The mountain shadow</td>
-            <td>Gregory David Roberts</td>
-        </tr>
-         <tr>
-            <td>Fountain Head</td>
-            <td>Ayn Rand</td>
-        </tr>
-         <tr>
-            <td>Kite runner</td>
-            <td>Khaled Hosseini</td>
-        </tr>
-        <tr>
-            <td>A thousand Splendid suns</td>
-            <td>Khaled Hosseini</td>
-        </tr>
-    </tbody>
-</table>
-`;
 
-let list = `
-<ul id="list">
-    <li>
-        Assassin Of History
-    </li>
-    <li>
-        Assassin Quest
-    </li>
-    <li>
-        Defenders Of The North
-    </li>
-    <li>
-        Snakes Without Hate
-    </li>
-</ul>`;
+function getTable(array, props) {
+    let table = document.createElement('table');
+    let body = document.createElement('tbody');
+    array.forEach(function (item) {
+        let row = document.createElement('tr');
+
+        props.forEach(function(prop) {
+           let cell = document.createElement('td');
+            cell.innerText = item[prop];
+            row.appendChild(cell);
+        });
+        body.appendChild(row);
+    });
+    table.appendChild(body);
+    table.setAttribute('id', 'table');
+    return table;
+}
+
+function getList(array, prop) {
+    let list = document.createElement('ul');
+    array.forEach(function (item) {
+        var listItem = document.createElement('li');
+        listItem.innerText = (prop) ? item[prop] : item;
+        list.appendChild(listItem);
+    });
+    list.setAttribute('id', 'list');
+    return list;
+}
 
 module.exports = {
     books : books,
     images : images,
-    table : table,
-    list : list
+    table : getTable,
+    list : getList
 };
