@@ -24,7 +24,7 @@ Vue.component('latest-emails', {
 });
 
 let latestEmails = [{
-    title : 'Oil - Data review / Europe Oil data',
+    title : 'report',
     scheduled : '123',
     sent : '123',
     unique_opened : '89',
@@ -35,15 +35,21 @@ const app = new Vue({
     el: '#app',
     data : {
         latestEmails : latestEmails
+    },
+    methods : {
+        stopAutoUpdate : function () {
+            clearInterval(interval);
+        },
+        startAutoUpdate : function () {
+            interval = setInterval(addReport, 2000);
+        }
     }
-});
 
-setTimeout(function () {
-    latestEmails.push({title : 'Natural Gas - Global LNG Data review'});
-    setTimeout(function () {
-        latestEmails.push({title : 'Natural Gas - Global LNG Data review'});
-        setTimeout(function () {
-            latestEmails.push({title : 'Natural Gas - Global LNG Data review'});
-        }, 2000);
-    }, 2000);
-}, 2000);
+});
+let x = 1;
+let interval = setInterval(addReport, 2000);
+
+function addReport() {
+    app.latestEmails = app.latestEmails.filter((x, index) =>  (index >= app.latestEmails.length - 7));
+    app.latestEmails.push({title : 'report .. ' + (x++)});
+}
