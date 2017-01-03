@@ -1,4 +1,4 @@
-let Carousel = require('./Carousel.js');
+import Carousel from './Carousel.js';
 
 var template = `
 <div style="font-weight: bold;">{{ title }}</div>

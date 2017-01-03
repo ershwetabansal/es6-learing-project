@@ -55,7 +55,7 @@ gulp.task('browserify', function() {
 });
 
 gulp.task('watch', function(){
-  gulp.watch('src/js/**/*.js', ['browserify', 'vue_demo', 'carousel_demo', 'filter']);
+  gulp.watch('src/js/**/*.js', ['vue_demo', 'carousel_demo', 'filter']);
 });
 
 gulp.task('test_watch', function(){
@@ -64,7 +64,7 @@ gulp.task('test_watch', function(){
 });
 
 gulp.task('default', function (callback) {
-    runSequence(['browserify', 'vue_demo', 'carousel_demo', 'filter'],
+    runSequence(['vue_demo', 'carousel_demo', 'filter'],
         callback
     );
 });

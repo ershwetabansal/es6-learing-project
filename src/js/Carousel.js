@@ -1,5 +1,5 @@
 const noop = () => {}
-class Carousel {
+export default class Carousel {
 
     constructor(options) {
         if (!Carousel.validate(options)) {
@@ -99,5 +99,3 @@ class Carousel {
         this.render();
     }
 }
-
-module.exports = Carousel;
