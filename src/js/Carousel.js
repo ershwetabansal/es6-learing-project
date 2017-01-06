@@ -62,7 +62,7 @@ export default class Carousel {
 
         let template = this.template;
         this.template
-            .match(/{{\s*[\w\.]+\s*}}/g)
+            .match(/{{\s*[\w\.]+\s*}}/g) // To find the variables in curly braces
             .map(x => ({matcher : x, replacer : this.source[this.index][x.match(/[\w\.]+/)[0]]}))
             .forEach(item => (template = template.replace(item.matcher, item.replacer)));
 
